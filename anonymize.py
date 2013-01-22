@@ -53,6 +53,12 @@ def get_updates(config):
             elif operation == 'random_username':
                 for field in listify(details):
                     updates.append("%s = CONCAT('_user_', id)" % (field,))
+            elif operation == 'random_date':
+                    updates.append("%s = from_unixtime(unix_timestamp(now()) - rand() * 3600 * 24 * 365)" % (field, ))
+            elif operation == 'random_md5':
+                    updates.append("%s = md5(rand())" % (field,))
+            elif operations == "leave_as_is":
+                continue
             elif operation == 'delete':
                 continue
             else:
