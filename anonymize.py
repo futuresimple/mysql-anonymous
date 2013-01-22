@@ -42,10 +42,10 @@ def get_updates(config):
                     updates.append("%s = NULL" % (field,))
             elif operation == 'random_int':
                 for field in listify(details):
-                    updates.append("%s = ROUND(RAND()*1000000)" % (field,))
+                    updates.append("%s = ROUND(RAND() * 2147483648)" % (field,))
             elif operation == 'random_ip':
                 for field in listify(details):
-                    updates.append("%s = INET_NTOA(RAND()*1000000000)" % (field,))
+                    updates.append("%s = INET_NTOA(RAND() * 4294967295)" % (field,))
             elif operation == 'random_email':
                 for field in listify(details):
                     updates.append("%s = CONCAT(id, '@mozilla.com')"
