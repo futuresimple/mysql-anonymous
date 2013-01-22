@@ -39,20 +39,20 @@ def get_updates(config):
         for operation, details in data.iteritems():
             if operation == 'nullify':
                 for field in listify(details):
-                    updates.append("%s = NULL" % field)
+                    updates.append("%s = NULL" % (field,))
             elif operation == 'random_int':
                 for field in listify(details):
-                    updates.append("%s = ROUND(RAND()*1000000)" % field)
+                    updates.append("%s = ROUND(RAND()*1000000)" % (field,))
             elif operation == 'random_ip':
                 for field in listify(details):
-                    updates.append("%s = INET_NTOA(RAND()*1000000000)" % field)
+                    updates.append("%s = INET_NTOA(RAND()*1000000000)" % (field,))
             elif operation == 'random_email':
                 for field in listify(details):
                     updates.append("%s = CONCAT(id, '@mozilla.com')"
-                                   % field)
+                                   % (field, )
             elif operation == 'random_username':
                 for field in listify(details):
-                    updates.append("%s = CONCAT('_user_', id)" % field)
+                    updates.append("%s = CONCAT('_user_', id)" % (field,))
             elif operation == 'delete':
                 continue
             else:
