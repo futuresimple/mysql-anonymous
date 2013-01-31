@@ -42,23 +42,24 @@ def get_updates(config):
                     updates.append("%s = NULL" % (field,))
             elif operation == 'random_int':
                 for field in listify(details):
-                    updates.append("%s = ROUND(RAND() * 2147483648)" % (field,))
+                    updates.append("%s = IF(%s, ROUND(RAND() * 2147483648), NULL)" % (field, field))
             elif operation == 'random_ip':
                 for field in listify(details):
-                    updates.append("%s = INET_NTOA(RAND() * 4294967295)" % (field,))
+                    updates.append("%s = IF(%s, INET_NTOA(RAND() * 4294967295), NULL)" % (field, field))
             elif operation == 'random_email':
                 for field in listify(details):
-                    updates.append("%s = CONCAT(id, '@mozilla.com')"
-                                   % (field, )
+                    updates.append("%s = IF(%s, CONCAT(id, '@mozilla.com'), NULL)" % (field, field))
             elif operation == 'random_username':
                 for field in listify(details):
-                    updates.append("%s = CONCAT('_user_', id)" % (field,))
+                    updates.append("%s = IF(%s, CONCAT('_user_', id), NULL)" % (field, field))
             elif operation == 'random_date':
-                    updates.append("%s = from_unixtime(unix_timestamp(now()) - rand() * 3600 * 24 * 365)" % (field, ))
+                    updates.append("%s = IF(%s, FROM_UNIXTIME(UNIX_TIMESTAMP(NOW()) - RAND() * 3600 * 24 * 365), NULL)" % (field, field))
             elif operation == 'random_md5':
-                    updates.append("%s = md5(rand())" % (field,))
-            elif operations == "leave_as_is":
+                    updates.append("%s = IF(%s, MD5(RAND()), NULL)" % (field, field))
+            elif operations == 'leave_as_is':
                 continue
+            elif operations == 'random_url':
+                    updates.append("%s = IF(%s, CONCAT('http://example.com/action?id=', MD5(RAND())), NULL)" % (field, field))
             elif operation == 'delete':
                 continue
             else:
