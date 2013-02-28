@@ -1,5 +1,8 @@
---- This is a sample anonymize.yml file that's used for the Firefox Add-ons
---- database.
+connection:
+  username: some_user
+  password: some_passwd
+  database: some_db
+
 
 database:
     truncate:
